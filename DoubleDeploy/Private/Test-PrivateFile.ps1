@@ -26,7 +26,12 @@ Function Test-PrivateFile {
 		$TestParam
 	)
 
-	If ($IsCoreCLR) {$SomeVar="SomeValue"}
+	If ($IsCoreCLR) {
+		$SomeVar = "SomeValue"
+	}
+	Else {
+		$SomeVar = "SomeOtherValue"
+	}
 	If ($TestParam -lt 5) {
 		$SomeVar = $True
 	}

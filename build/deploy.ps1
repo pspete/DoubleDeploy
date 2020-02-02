@@ -78,6 +78,9 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 			throw $_
 
 		}
+		Finally {
+			exit;
+		}
 
 	}
 

@@ -1,7 +1,7 @@
 #---------------------------------#
 # Header                          #
 #---------------------------------#
-Write-Host "Installing:" -ForegroundColor Yellow
+Write-Host "Installing Required Modules:" -ForegroundColor Yellow
 
 $RequiredModules = @(
 	"Pester",
@@ -24,7 +24,7 @@ if(-not $IsCoreCLR) {
 foreach ($Module in $RequiredModules) {
 
 	Try {
-		Write-Host "`tRequired Module: $Module..."
+		Write-Host "`tInstalling: $Module..."
 		Install-Module -Name $Module -Repository PSGallery -Confirm:$false -Force -SkipPublisherCheck -ErrorAction Stop | Out-Null
 	}Catch { throw "`t`tError Installing $Module" }
 
