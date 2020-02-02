@@ -23,14 +23,17 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 		git config --global user.name "Pete Maan"
 
+		Write-Host "Checking out branch: $($ENV:APPVEYOR_REPO_BRANCH)"
 		git checkout -q $($ENV:APPVEYOR_REPO_BRANCH)
 
+		Write-Host "Staging Change"
 		git add $(Join-Path "$env:APPVEYOR_PROJECT_NAME" "$env:APPVEYOR_PROJECT_NAME.psd1")
 
+		Write-Host "Status"
 		git status
-
+		Write-Host "Commit"
 		git commit -s -m "Update Version"
-
+		Write-Host "Push"
 		git push --porcelain origin $($ENV:APPVEYOR_REPO_BRANCH)
 
 		Write-Host "$($env:APPVEYOR_PROJECT_NAME) updated version pushed to GitHub." -ForegroundColor Cyan
