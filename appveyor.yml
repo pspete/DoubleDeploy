@@ -36,14 +36,15 @@ only_commits:
 
 image: Visual Studio 2017
 
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
 - ps: . .\build\install.ps1
 - pwsh.exe -File .\build\install.ps1
 build_script:
-- pwsh.exe -File .\build\build.ps1
+- ps: . .\build\build.ps1
 test_script:
 - ps: . .\build\test.ps1
 - pwsh.exe -File .\build\test.ps1
 deploy_script:
-- pwsh.exe -File .\build\deploy.ps1
-#- ps: . .\build\deploy.ps1
+- ps: . .\build\deploy.ps1
