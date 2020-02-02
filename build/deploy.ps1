@@ -27,7 +27,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		git checkout -q master
 
 		Write-Host "Staging Change"
-		git add $(Join-Path "$env:APPVEYOR_BUILD_FOLDER" "$env:APPVEYOR_PROJECT_NAME" "$env:APPVEYOR_PROJECT_NAME.psd1")
+		git add $(Join-Path -Path (Join-Path -Path "$env:APPVEYOR_BUILD_FOLDER" -ChildPath "$env:APPVEYOR_PROJECT_NAME") -ChildPath "$env:APPVEYOR_PROJECT_NAME.psd1")
 
 		Write-Host "Status"
 		git status
