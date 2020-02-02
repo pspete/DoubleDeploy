@@ -33,8 +33,8 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		git status
 		Write-Host "Commit"
 		git commit -s -m "Update Version"
-		Write-Host "Push"
-		git push --porcelain origin $($ENV:APPVEYOR_REPO_BRANCH)
+		Write-Host "Push - git push origin $($ENV:APPVEYOR_REPO_BRANCH)"
+		git push origin $($ENV:APPVEYOR_REPO_BRANCH)
 
 		Write-Host "$($env:APPVEYOR_PROJECT_NAME) updated version pushed to GitHub." -ForegroundColor Cyan
 
