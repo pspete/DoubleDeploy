@@ -121,30 +121,4 @@ Describe "Module" -Tag "Consistency" {
 
 	}
 
-	Describe 'PSScriptAnalyzer' {
-
-		$Scripts = Get-ChildItem "$ModulePath" -Filter '*.ps1' -Exclude '*.ps1xml' -Recurse
-
-		$Rules = Get-ScriptAnalyzerRule -Severity Warning
-
-		foreach ($Script in $scripts) {
-
-			Context "Checking: $($script.BaseName)" {
-
-				foreach ($rule in $rules) {
-
-					It "passes rule $rule" {
-
-						(Invoke-ScriptAnalyzer -Path $script.FullName -IncludeRule $rule.RuleName ).Count | Should Be 0
-
-					}
-
-				}
-
-			}
-
-		}
-
-	}
-
 }
