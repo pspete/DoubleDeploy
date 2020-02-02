@@ -34,7 +34,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		Write-Host "Commit"
 		git commit -s -m "Update Version"
 		Write-Host "Push"
-		git push --porcelain origin $($ENV:APPVEYOR_REPO_BRANCH) --verbose
+		git push --porcelain origin "$($ENV:APPVEYOR_REPO_BRANCH)" --verbose
 
 		Write-Host "$($env:APPVEYOR_PROJECT_NAME) updated version pushed to GitHub." -ForegroundColor Cyan
 
@@ -42,7 +42,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 	Catch {
 
-		Write-Warning "Push to GitHub failed."
+		Write-Host "Push to GitHub failed."
 		throw $_
 
 	}
