@@ -7,7 +7,7 @@ Write-Host "Current working directory: $pwd"
 #---------------------------------#
 # Run Pester Tests                #
 #---------------------------------#
-$files = Get-ChildItem $($ENV:APPVEYOR_BUILD_FOLDER) -Include *.ps1 -Recurse
+$files = Get-ChildItem $(Join-Path $ENV:APPVEYOR_BUILD_FOLDER $env:APPVEYOR_PROJECT_NAME) -Include *.ps1 -Recurse
 
 $res = Invoke-Pester -Path ".\Tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml -CodeCoverage $files -PassThru
 

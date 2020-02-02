@@ -81,11 +81,18 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 	}
 
+	Else {
+
+		Write-Host "Finished testing of branch: $env:APPVEYOR_REPO_BRANCH - Exiting"
+		exit;
+
+	}
+
 }
 
 Else {
 
-	Write-Host "Finished testing of branch: $env:APPVEYOR_REPO_BRANCH - Exiting"
+	Write-Host "Nothing to Deploy - Exiting"
 	exit;
 
 }
