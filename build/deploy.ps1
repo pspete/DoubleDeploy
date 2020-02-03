@@ -36,7 +36,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 		git status
 		Write-Host "Push"
-		"GIT_TRACE=1" git push origin $($ENV:APPVEYOR_REPO_BRANCH)
+		git push --porcelain origin $($ENV:APPVEYOR_REPO_BRANCH)
 
 		Write-Host "$($env:APPVEYOR_PROJECT_NAME) updated version pushed to GitHub." -ForegroundColor Cyan
 
