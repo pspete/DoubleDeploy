@@ -35,8 +35,8 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		git commit -s -m "Update Version"
 
 		git status
-
-		git push origin master
+		Write-Host "Push"
+		GIT_TRACE=1 git push origin master
 
 		Write-Host "$($env:APPVEYOR_PROJECT_NAME) updated version pushed to GitHub." -ForegroundColor Cyan
 
