@@ -10,6 +10,8 @@ environment:
     secure: bdyanCqxWP0hylNYUvdIl8eUlDMhmIsmeFUNxGwnESlEksBZnxcLhaj1lYVuD7LM
   codecov_key:
     secure: P8TyHefSoYBAZk/UMFHNWcfmcjQp0o3X3fP3DMFhTzxXa6yXlA+w8CT69jYfh7n/
+  github_email:
+    secure: x5ljenzXfYXkzpEu9eX7AQvb3AkFbiXG2NndMzw9Zc4=
 
 skip_tags: true
 

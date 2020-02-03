@@ -19,22 +19,20 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 		Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
 
-		git config --global user.email "pete.maan+github@gmail.com"
+		git config --global user.email "$($env:github_email)"
 
 		git config --global user.name "Pete Maan"
 
 		Write-Host "Checking out branch: $($ENV:APPVEYOR_REPO_BRANCH)"
-		git checkout -q master
+		git checkout master
 
-		Write-Host "Staging Change"
 		git add $(Join-Path -Path (Join-Path -Path "$env:APPVEYOR_BUILD_FOLDER" -ChildPath "$env:APPVEYOR_PROJECT_NAME") -ChildPath "$env:APPVEYOR_PROJECT_NAME.psd1")
 
-		Write-Host "Status"
 		git status
-		Write-Host "Commit"
+
 		git commit -s -m "Update Version"
-		Write-Host "Push"
-		git push origin master -q
+
+		git push origin master
 
 		Write-Host "$($env:APPVEYOR_PROJECT_NAME) updated version pushed to GitHub." -ForegroundColor Cyan
 
