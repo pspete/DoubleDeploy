@@ -2,6 +2,7 @@
 version: 0.1.{build}
 
 environment:
+  GIT_TRACE: 1
   access_token:
     secure: bDZ9LJ84SWlGw/D3R/q3ADwDslfrLNZLMdH3ZRjdi5xwkGanmjf7DvgN+crc4BU/
   psgallery_key:
@@ -57,5 +58,4 @@ deploy_script:
   - git add *.psd1
   - git status
   - git commit -s -m "Update Version"
-  - GIT_TRACE=1
   - git push --porcelain origin %APPVEYOR_REPO_BRANCH%
