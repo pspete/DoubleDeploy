@@ -24,7 +24,6 @@ if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 	Write-Host 'Publishing Code Coverage'
 	Publish-Coverage -Coverage $coverage
 
-	#$env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
 	Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
 
 	bash codecov.sh -f coverage.json
