@@ -1,12 +1,20 @@
+<#---------------------------------
+Update version number on GitHub to match build version
+---------------------------------#>
+
+
 if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
-	#---------------------------------#
-	# Push to Master Branch        #
-	#---------------------------------#
+	Write-Host "Deploy Process: GitHub Repository" -ForegroundColor Yellow
+
+	<#---------------------------------#>
+	<# If Not a PR                     #>
+	<# Push psd1 file to ORIGIN Branch #>
+	<#---------------------------------#>
 
 	Try {
 
-		Write-Host "Push Updated $($env:APPVEYOR_PROJECT_NAME).psd1 to GitHub..."
+		Write-Host "Push Updated $($env:APPVEYOR_PROJECT_NAME).psd1 to GitHub..." -ForegroundColor Yellow
 
 		git config --global core.safecrlf false
 
@@ -34,9 +42,12 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 	Catch {
 
-		Write-Host "Push to GitHub failed."
+		Write-Host "Push to GitHub failed." -ForegroundColor Red
 		throw $_
 
 	}
 
+}
+Else {
+	Write-Host "Skipping Deploy Process: GitHub Repository" -ForegroundColor Yellow
 }
