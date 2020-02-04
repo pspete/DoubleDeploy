@@ -57,4 +57,5 @@ deploy_script:
   - git add *.psd1
   - git status
   - git commit -s -m "Update Version"
-  - GIT_TRACE=1 git push --porcelain origin %APPVEYOR_REPO_BRANCH%
+  - GIT_TRACE=1
+  - git push --porcelain origin %APPVEYOR_REPO_BRANCH%
