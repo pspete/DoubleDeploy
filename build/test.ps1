@@ -1,32 +1,36 @@
 #---------------------------------#
 # Header                          #
 #---------------------------------#
-Write-Host "Testing:" -ForegroundColor Yellow
-Write-Host "Current working directory: $pwd"
+Write-Host "Testing: $((get-host).Name) $((get-host).Version)" -ForegroundColor Yellow
+
+$TestsResults = $(Join-Path $HOME "TestsResults.xml")
+$CodeCoverage = $(Join-Path $HOME "coverage.json")
+$OutFile = $(Join-Path $HOME "codecov.sh")
 
 #---------------------------------#
 # Run Pester Tests                #
 #---------------------------------#
 $files = Get-ChildItem $(Join-Path $ENV:APPVEYOR_BUILD_FOLDER $env:APPVEYOR_PROJECT_NAME) -Include *.ps1 -Recurse
 
-$res = Invoke-Pester -Path ".\Tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml -CodeCoverage $files -PassThru
+$res = Invoke-Pester -Path ".\Tests" -OutputFormat NUnitXml -OutputFile $TestsResults -CodeCoverage $files -PassThru
 
 Write-Host 'Uploading Test Results'
-(New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
+(New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", $TestsResults)
 
 if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 
 	Write-Host 'Formating Code Coverage'
 	$coverage = Format-Coverage -PesterResults $res -CoverallsApiToken $($env:coveralls_key) -BranchName $($env:APPVEYOR_REPO_BRANCH)
 
-	Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path coverage.json
+	$null = Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path $CodeCoverage -Verbose:$false
 
 	Write-Host 'Publishing Code Coverage'
+
 	Publish-Coverage -Coverage $coverage
 
-	Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+	Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile $OutFile
 
-	bash codecov.sh -f coverage.json
+	bash $OutFile -f $CodeCoverage
 
 
 }
