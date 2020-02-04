@@ -49,4 +49,4 @@ test_script:
 - ps: . .\build\test.ps1
 #- pwsh.exe -File .\build\test.ps1
 deploy_script:
-- ps: . .\build\deploy.ps1
+- ps: . .\build\deploy-github.ps1
