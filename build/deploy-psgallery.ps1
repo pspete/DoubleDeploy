@@ -1,7 +1,7 @@
 <#---------------------------------
 Auto-publish changes to master branch as a new module version in the PSGallery.
 - Only publish if build version is greater than 1.0
-- Skip Auto-publish with specific commit message
+- Skip Auto-publish with specific commit message of "Manual Deployment"
 ---------------------------------#>
 
 
@@ -23,9 +23,9 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 			If ($ENV:APPVEYOR_REPO_COMMIT_MESSAGE -eq "Manual Deployment") {
 
 				<# Manual Deploy to PSGallery #>
-				Write-Host "Finished testing of branch: $env:APPVEYOR_REPO_BRANCH"
-				Write-Host "Manual Deployment to PSGallery Required"
-				Write-Host "Exiting"
+				Write-Host "Finished testing of branch: $env:APPVEYOR_REPO_BRANCH" -ForegroundColor Cyan
+				Write-Host "Manual Deployment to PSGallery Required" -ForegroundColor Cyan
+				Write-Host "Exiting" -ForegroundColor Cyan
 				exit;
 
 			}
@@ -50,7 +50,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 				}
 				Catch {
 
-					Write-Warning "Publish Failed."
+					Write-Host "Publish Failed." -ForegroundColor Red
 					throw $_
 
 				}
@@ -64,7 +64,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		Else {
 
 			<# Less Than version 1.0 - No Deployment   #>
-			Write-Host "Nothing to Deploy - Exiting"
+			Write-Host "Nothing to Deploy - Exiting" -ForegroundColor Cyan
 			exit;
 
 		}
@@ -74,7 +74,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 		<# Not Master Branch - No Deployment      #>
 
-		Write-Host "Finished testing of branch: $env:APPVEYOR_REPO_BRANCH - Exiting"
+		Write-Host "Finished testing of branch: $env:APPVEYOR_REPO_BRANCH - Exiting" -ForegroundColor Cyan
 		exit;
 
 	}
