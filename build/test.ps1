@@ -1,7 +1,7 @@
 #---------------------------------#
 # Header                          #
 #---------------------------------#
-Write-Host "Testing: $((get-host).Name) $((get-host).Version)" -ForegroundColor Yellow
+Write-Host "Testing: PSVersion $($PSVersionTable.PSVersion)" -ForegroundColor Yellow
 
 $TestsResults = $(Join-Path $HOME "TestsResults.xml")
 $CodeCoverage = $(Join-Path $HOME "coverage.json")
@@ -22,7 +22,7 @@ if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 	Write-Host 'Formating Code Coverage'
 	$coverage = Format-Coverage -PesterResults $res -CoverallsApiToken $($env:coveralls_key) -BranchName $($env:APPVEYOR_REPO_BRANCH)
 
-	$null = Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path $CodeCoverage -Verbose:$false
+	Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path $CodeCoverage -Verbose:$false
 
 	Write-Host 'Publishing Code Coverage'
 
