@@ -45,8 +45,8 @@ install:
 build_script:
   - ps: . .\build\build.ps1
 
-test_script:
-  - ps: . .\build\test.ps1
+#test_script:
+  #- ps: . .\build\test.ps1
 
 deploy_script:
   - git config --global credential.helper store
