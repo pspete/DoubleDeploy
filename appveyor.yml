@@ -50,12 +50,3 @@ test_script:
 
 deploy_script:
   - ps: . .\build\deploy-github.ps1
-  #- git config --global credential.helper store
-  #- ps: Set-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-  #- git config --global user.email %github_email%
-  #- git config --global user.name "Pete Maan"
-  #- git checkout %APPVEYOR_REPO_BRANCH% -q
-  #- git add *.psd1
-  #- git status
-  #- git commit -s -m "Update Version"
-  #- git push --porcelain origin %APPVEYOR_REPO_BRANCH%
