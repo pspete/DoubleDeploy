@@ -6,7 +6,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 	Try {
 
-		Write-Host "Update Version number, push to GitHub..."
+		Write-Host "Push Updated $($env:APPVEYOR_PROJECT_NAME).psd1 to GitHub..."
 
 		git config --global core.safecrlf false
 
@@ -18,22 +18,17 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 		git config --global user.name "Pete Maan"
 
-		Write-Host "Checking out branch: $($ENV:APPVEYOR_REPO_BRANCH)"
-		git checkout master -q
+		git checkout $($ENV:APPVEYOR_REPO_BRANCH) -q
 
 		git add $(Join-Path -Path (Join-Path -Path "$env:APPVEYOR_BUILD_FOLDER" -ChildPath "$env:APPVEYOR_PROJECT_NAME") -ChildPath "$env:APPVEYOR_PROJECT_NAME.psd1")
 
 		git status
 
-		git remote -v
+		git commit -s -m "Update Version: $($env:APPVEYOR_BUILD_VERSION)"
 
-		git commit -s -m "Update Version"
-
-		git status
-		Write-Host "Push"
 		git push --porcelain origin $($ENV:APPVEYOR_REPO_BRANCH)
 
-		Write-Host "$($env:APPVEYOR_PROJECT_NAME) updated version pushed to GitHub." -ForegroundColor Cyan
+		Write-Host "$($env:APPVEYOR_PROJECT_NAME) version $($env:APPVEYOR_BUILD_VERSION) pushed to GitHub." -ForegroundColor Cyan
 
 	}
 
