@@ -49,9 +49,8 @@ test_script:
   - ps: . .\build\test.ps1
 
 deploy_script:
-  - git config --global core.safecrlf false
   - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
   - git config --global user.email %github_email%
   - git config --global user.name "Pete Maan"
   - git checkout %APPVEYOR_REPO_BRANCH% -q
