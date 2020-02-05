@@ -55,3 +55,16 @@ test_script:
 deploy_script:
   - ps: . .\build\deploy-github.ps1
   - ps: . .\build\deploy-psgallery.ps1
+
+deploy:
+  release: $(APPVEYOR_PROJECT_NAME)-v$(APPVEYOR_BUILD_VERSION)
+  description: '$(APPVEYOR_PROJECT_NAME) $(APPVEYOR_BUILD_VERSION)'
+  provider: GitHub
+  auth_token:
+    secure: bDZ9LJ84SWlGw/D3R/q3ADwDslfrLNZLMdH3ZRjdi5xwkGanmjf7DvgN+crc4BU/
+  artifact: $(APPVEYOR_PROJECT_NAME)-latest
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: false
