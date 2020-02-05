@@ -16,4 +16,3 @@
 [codefactor]:https://www.codefactor.io/repository/github/pspete/doubledeploy/badge
 [codecov]:https://codecov.io/gh/pspete/DoubleDeploy/branch/master/graph/badge.svg
 [codecov-link]:https://codecov.io/gh/pspete/DoubleDeploy
-[![Coverage Status](https://coveralls.io/repos/github/pspete/DoubleDeploy/badge.svg?branch=master)](https://coveralls.io/github/pspete/DoubleDeploy?branch=master)
