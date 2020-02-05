@@ -49,7 +49,7 @@ Else {
 
 		Remove-Item -Path .\Release -Recurse -Force
 		Remove-Item -Path .\$OutputArchive -Recurse -Force
-	}
+
 	}
 
 	Catch {
