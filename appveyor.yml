@@ -1,7 +1,8 @@
 # version format
-version: 0.1.{build}
+version: 0.2.{build}
 
 environment:
+  #GIT_TRACE: 1
   access_token:
     secure: bDZ9LJ84SWlGw/D3R/q3ADwDslfrLNZLMdH3ZRjdi5xwkGanmjf7DvgN+crc4BU/
   psgallery_key:
@@ -10,6 +11,8 @@ environment:
     secure: bdyanCqxWP0hylNYUvdIl8eUlDMhmIsmeFUNxGwnESlEksBZnxcLhaj1lYVuD7LM
   codecov_key:
     secure: P8TyHefSoYBAZk/UMFHNWcfmcjQp0o3X3fP3DMFhTzxXa6yXlA+w8CT69jYfh7n/
+  github_email:
+    secure: x5ljenzXfYXkzpEu9eX7AQvb3AkFbiXG2NndMzw9Zc4=
 
 skip_tags: true
 
@@ -39,12 +42,29 @@ image: Visual Studio 2017
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
-- ps: . .\build\install.ps1
-#- pwsh.exe -File .\build\install.ps1
+  - ps: . .\build\install.ps1
+  - pwsh.exe -File .\build\install.ps1
+
 build_script:
-- ps: . .\build\build.ps1
+  - ps: . .\build\build.ps1
+
 test_script:
-- ps: . .\build\test.ps1
-#- pwsh.exe -File .\build\test.ps1
-deploy_script:
-- ps: . .\build\deploy.ps1
+  - ps: . .\build\test.ps1
+  - pwsh.exe -File .\build\test.ps1
+
+deploy:
+  release: $(APPVEYOR_PROJECT_NAME)-v$(APPVEYOR_BUILD_VERSION)
+  description: '$(APPVEYOR_PROJECT_NAME) $(APPVEYOR_BUILD_VERSION)'
+  provider: GitHub
+  auth_token:
+    secure: bDZ9LJ84SWlGw/D3R/q3ADwDslfrLNZLMdH3ZRjdi5xwkGanmjf7DvgN+crc4BU/
+  artifact: $(APPVEYOR_PROJECT_NAME)-latest
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: false
+
+after_deploy:
+  - ps: . .\build\deploy-github.ps1
+  - ps: . .\build\deploy-psgallery.ps1

@@ -15,33 +15,45 @@ Write-Host "Author           : $env:APPVEYOR_REPO_COMMIT_AUTHOR"
 Write-Host "Branch           : $env:APPVEYOR_REPO_BRANCH"
 Write-Host "Build Folder     : $env:APPVEYOR_BUILD_FOLDER"
 
-#---------------------------------#
-# BuildScript                     #
-#---------------------------------#
-#---------------------------------#
-# Update module manifest          #
-#---------------------------------#
-if ($CurrentVersion -eq $env:APPVEYOR_BUILD_VERSION) {
+If ([System.Version]$($env:APPVEYOR_BUILD_VERSION) -le [System.Version]$CurrentVersion) {
 
-	Write-Host "No build tasks required... skipping"
+	throw "Build Version Not Greater than Current Version"
 
 }
-
-else {
-
-	Write-Host "Updating Manifest Version to $env:APPVEYOR_BUILD_VERSION"
+Else {
 
 	Try {
+
+		#---------------------------------#
+		# BuildScript                     #
+		#---------------------------------#
+		#---------------------------------#
+		# Update module manifest          #
+		#---------------------------------#
+		Write-Host "Updating Manifest Version to $env:APPVEYOR_BUILD_VERSION" -ForegroundColor Cyan
 
 		#Replace version in manifest with build version from appveyor
 		((Get-Content $ManifestPath).replace("= '$($currentVersion)'", "= '$($env:APPVEYOR_BUILD_VERSION)'")) |
 		Set-Content $ManifestPath -ErrorAction Stop
 
+		<#-- Package Version Release    --#>
+
+		$Directory = New-Item -ItemType Directory -Path "Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)" -Force -ErrorAction Stop
+		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+		$ReleaseSource = $(Resolve-Path .\$env:APPVEYOR_PROJECT_NAME)
+		Copy-Item -Path $ReleaseSource\* -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
+		Compress-Archive $(Split-Path -Parent $Directory) -DestinationPath .\$OutputArchive -ErrorAction Stop
+
+		<#-- Release Artifact   --#>
+		Write-Host "Release Artifact  : $OutputArchive"
+		Push-AppveyorArtifact .\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
+
+		Remove-Item -Path .\Release -Recurse -Force
+
 	}
 
 	Catch {
 
-		Write-Warning "Manifest Update failed."
 		throw $_
 
 	}

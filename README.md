@@ -3,10 +3,10 @@
 |--------------------------|--------------------------|--------------------------|---------------------------|----------------------------|-------------------------|-----------------------------|
 |[![appveyor][]][av-site]  | [![coveralls][]][cv-site]|[![codefactor][]][cf-site]| [![psgallery][]][ps-site] |[![downloads][]][ps-site]   |[![tests][]][tests-site] |[![codecov][]][codecov-link] |
 
-[appveyor]:https://ci.appveyor.com/api/projects/status/j45hbplm4dq4vfye/branch/master?svg=true
+[appveyor]:https://ci.appveyor.com/api/projects/status/y6ad0firmgxok216?svg=true
 [av-site]:https://ci.appveyor.com/project/pspete/doubledeploy/branch/master
-[coveralls]:https://coveralls.io/repos/github/pspete/DoubleDeploy/badge.svg
-[cv-site]:https://coveralls.io/github/pspete/DoubleDeploy
+[coveralls]:https://coveralls.io/repos/github/pspete/DoubleDeploy/badge.svg?branch=master
+[cv-site]:https://coveralls.io/github/pspete/DoubleDeploy?branch=master
 [psgallery]:https://img.shields.io/powershellgallery/v/DoubleDeploy.svg
 [ps-site]:https://www.powershellgallery.com/packages/DoubleDeploy
 [tests]:https://img.shields.io/appveyor/tests/pspete/doubledeploy.svg
