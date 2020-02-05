@@ -49,7 +49,6 @@ Else {
 		Push-AppveyorArtifact .\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
 
 		Remove-Item -Path .\Release -Recurse -Force
-		Remove-Item -Path .\$OutputArchive -Recurse -Force
 
 	}
 
