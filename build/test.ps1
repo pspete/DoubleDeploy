@@ -28,7 +28,7 @@ if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 
 	Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
 
-	bash .\codecov.sh -f .\coverage.json
+	bash codecov.sh -f coverage.json
 
 	Remove-Item -Path $(Resolve-Path .\coverage.json) -Force
 	Remove-Item -Path $(Resolve-Path .\codecov.sh) -Force
