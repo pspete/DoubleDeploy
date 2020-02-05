@@ -24,7 +24,7 @@ GUID = 'cda8bb20-46a9-4043-a921-91cf5d492c87'
 Author = 'Pete Maan'
 
 # Company or vendor of this module
-CompanyName = 'Unknown1'
+CompanyName = 'Unknown'
 
 # Copyright statement for this module
 Copyright = 'Pete Maan 2020'
