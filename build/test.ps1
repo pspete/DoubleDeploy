@@ -19,14 +19,14 @@ if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 	Write-Host 'Formating Code Coverage'
 	$coverage = Format-Coverage -PesterResults $res -CoverallsApiToken $($env:coveralls_key) -BranchName $($env:APPVEYOR_REPO_BRANCH)
 
-	Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path $(Resolve-Path ..\coverage.json)
+	Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path ..\coverage.json
 
 	Write-Host 'Publishing Code Coverage'
 	Publish-Coverage -Coverage $coverage
 
-	Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile $(Resolve-Path ..\codecov.sh)
+	Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile ..\codecov.sh
 
-	bash $(Resolve-Path ..\codecov.sh) -f $(Resolve-Path ..\coverage.json)
+	bash ..\codecov.sh -f ..\coverage.json
 
 }
 #---------------------------------#
