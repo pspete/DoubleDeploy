@@ -42,10 +42,10 @@ Else {
 		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip"
 		$ReleaseSource = $(Resolve-Path .\$env:APPVEYOR_PROJECT_NAME)
 		Copy-Item -Path $ReleaseSource -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
-		Compress-Archive $(Split-Path -Parent (Split-Path -Parent $Directory)) -DestinationPath $OutputArchive -ErrorAction Stop
+		Compress-Archive $(Split-Path -Parent (Split-Path -Parent $Directory)) -DestinationPath .\$OutputArchive -ErrorAction Stop
 
 		Write-Host "Release Package  : $OutputArchive"
-		Push-AppveyorArtifact -FileName $OutputArchive -DeploymentName "($env:APPVEYOR_PROJECT_NAME)-latest"
+		Push-AppveyorArtifact .\$OutputArchive -FileName $OutputArchive -DeploymentName "($env:APPVEYOR_PROJECT_NAME)-latest"
 	}
 
 	Catch {
