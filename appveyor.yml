@@ -65,6 +65,6 @@ deploy:
     branch: master
     APPVEYOR_REPO_TAG: false
 
-after_deploy:
+on_success:
   - ps: . .\build\deploy-github.ps1
   - ps: . .\build\deploy-psgallery.ps1

@@ -12,8 +12,6 @@ Function Test-PublicFile {
 	.EXAMPLE
 	An example
 
-	.NOTES
-	General notes
 	#>
 
 	[CmdletBinding()]
