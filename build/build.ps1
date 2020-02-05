@@ -15,33 +15,41 @@ Write-Host "Author           : $env:APPVEYOR_REPO_COMMIT_AUTHOR"
 Write-Host "Branch           : $env:APPVEYOR_REPO_BRANCH"
 Write-Host "Build Folder     : $env:APPVEYOR_BUILD_FOLDER"
 
-#---------------------------------#
-# BuildScript                     #
-#---------------------------------#
-#---------------------------------#
-# Update module manifest          #
-#---------------------------------#
-if ($CurrentVersion -eq $env:APPVEYOR_BUILD_VERSION) {
+If ([System.Version]$($env:APPVEYOR_BUILD_VERSION) -le [System.Version]$CurrentVersion) {
 
-	Write-Host "No build tasks required... skipping"
+	throw "Build Version Not Greater than Current Version"
 
 }
-
-else {
-
-	Write-Host "Updating Manifest Version to $env:APPVEYOR_BUILD_VERSION"
+Else {
 
 	Try {
+
+		#---------------------------------#
+		# BuildScript                     #
+		#---------------------------------#
+		#---------------------------------#
+		# Update module manifest          #
+		#---------------------------------#
+		Write-Host "Updating Manifest Version to $env:APPVEYOR_BUILD_VERSION"
 
 		#Replace version in manifest with build version from appveyor
 		((Get-Content $ManifestPath).replace("= '$($currentVersion)'", "= '$($env:APPVEYOR_BUILD_VERSION)'")) |
 		Set-Content $ManifestPath -ErrorAction Stop
 
+		<#-- Package Version Release    --#>
+
+		$Directory = New-Item -ItemType Directory -Path $(Join-Path -Path $([System.Environment]::GetEnvironmentVariable("TEMP")) -ChildPath "Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)") -Force -ErrorAction Stop
+		$OutputArchive = $(Join-Path -Path $(Split-Path -Parent (Split-Path -Parent $Directory)) -ChildPath "$($env:APPVEYOR_PROJECT_NAME)-($env:APPVEYOR_BUILD_VERSION).zip")
+		$ReleaseSource = $(Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME)
+		Copy-Item -Path $ReleaseSource -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
+		Compress-Archive $(Split-Path -Parent(Split-Path -Parent $Directory)) -DestinationPath $OutputArchive -ErrorAction Stop
+
+		Write-Host "Release Package     : $OutputArchive"
+
 	}
 
 	Catch {
 
-		Write-Warning "Manifest Update failed."
 		throw $_
 
 	}
