@@ -45,7 +45,7 @@ Else {
 		Compress-Archive $(Split-Path -Parent (Split-Path -Parent $Directory)) -DestinationPath .\$OutputArchive -ErrorAction Stop
 
 		Write-Host "Release Package  : $OutputArchive"
-		Push-AppveyorArtifact .\$OutputArchive -FileName $OutputArchive -DeploymentName "($env:APPVEYOR_PROJECT_NAME)-latest"
+		Push-AppveyorArtifact .\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
 	}
 
 	Catch {
