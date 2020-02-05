@@ -3,9 +3,10 @@
 #---------------------------------#
 Write-Host "Testing: PSVersion $($PSVersionTable.PSVersion)" -ForegroundColor Yellow
 
-$TestsResults = $(Join-Path $HOME "TestsResults.xml")
-$CodeCoverage = $(Join-Path $HOME "coverage.json")
-$OutFile = $(Join-Path $HOME "codecov.sh")
+$TempDir = [System.Environment]::GetEnvironmentVariable("Temp")
+$TestsResults = $(Join-Path $TempDir "TestsResults.xml")
+$CodeCoverage = $(Join-Path $TempDir "coverage.json")
+$OutFile = $(Join-Path $TempDir "codecov.sh")
 
 #---------------------------------#
 # Run Pester Tests                #
