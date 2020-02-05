@@ -1,8 +1,7 @@
 #---------------------------------#
 # Header                          #
 #---------------------------------#
-Write-Host "Testing:" -ForegroundColor Yellow
-Write-Host "Current working directory: $pwd"
+Write-Host "Testing: PSVersion $($PSVersionTable.PSVersion)" -ForegroundColor Yellow
 
 #---------------------------------#
 # Run Pester Tests                #
@@ -21,7 +20,7 @@ if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 	Write-Host 'Formating Code Coverage'
 	$coverage = Format-Coverage -PesterResults $res -CoverallsApiToken $($env:coveralls_key) -BranchName $($env:APPVEYOR_REPO_BRANCH)
 
-	$null = Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path coverage.json -verbose:$false
+	$null = Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path coverage.json
 
 	Write-Host 'Publishing Code Coverage'
 	$null = Publish-Coverage -Coverage $coverage
