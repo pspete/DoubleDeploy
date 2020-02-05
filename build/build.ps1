@@ -44,6 +44,7 @@ Else {
 		Copy-Item -Path $ReleaseSource\* -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
 		Compress-Archive $(Split-Path -Parent $Directory) -DestinationPath .\$OutputArchive -ErrorAction Stop
 
+		<#-- Release Artifact   --#>
 		Write-Host "Release Artifact  : $OutputArchive"
 		Push-AppveyorArtifact .\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
 
