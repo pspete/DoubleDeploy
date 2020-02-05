@@ -30,7 +30,7 @@ Else {
 		#---------------------------------#
 		# Update module manifest          #
 		#---------------------------------#
-		Write-Host "Updating Manifest Version to $env:APPVEYOR_BUILD_VERSION"
+		Write-Host "Updating Manifest Version to $env:APPVEYOR_BUILD_VERSION" -ForegroundColor Cyan
 
 		#Replace version in manifest with build version from appveyor
 		((Get-Content $ManifestPath).replace("= '$($currentVersion)'", "= '$($env:APPVEYOR_BUILD_VERSION)'")) |
@@ -38,14 +38,14 @@ Else {
 
 		<#-- Package Version Release    --#>
 
-		$Directory = New-Item -ItemType Directory -Path $(Join-Path -Path $([System.Environment]::GetEnvironmentVariable("TEMP")) -ChildPath "Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)") -Force -ErrorAction Stop
-		$OutputArchive = $(Join-Path -Path $(Split-Path -Parent (Split-Path -Parent $Directory)) -ChildPath "$($env:APPVEYOR_PROJECT_NAME)-($env:APPVEYOR_BUILD_VERSION).zip")
-		$ReleaseSource = $(Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME)
+		$Directory = New-Item -ItemType Directory -Path "Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)" -Force -ErrorAction Stop
+		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+		$ReleaseSource = $(Resolve-Path .\$env:APPVEYOR_PROJECT_NAME)
 		Copy-Item -Path $ReleaseSource -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
-		Compress-Archive $(Split-Path -Parent(Split-Path -Parent $Directory)) -DestinationPath $OutputArchive -ErrorAction Stop
+		Compress-Archive $(Split-Path -Parent (Split-Path -Parent $Directory)) -DestinationPath $OutputArchive -ErrorAction Stop
 
-		Write-Host "Release Package     : $OutputArchive"
-
+		Write-Host "Release Package  : $OutputArchive"
+		Push-AppveyorArtifact -FileName $OutputArchive -DeploymentName "($env:APPVEYOR_PROJECT_NAME)-latest"
 	}
 
 	Catch {
