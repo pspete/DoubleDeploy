@@ -55,6 +55,8 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 		If ($env:APPVEYOR_BUILD_VERSION -ge "0.3.0") {
 
+			<# Create New Release     #>
+
 			$token = $env:access_token
 			$uploadFilePath = Resolve-Path "..\$($env:APPVEYOR_PROJECT_NAME).zip"
 			$releaseName = "v$($env:APPVEYOR_BUILD_VERSION)"
@@ -93,7 +95,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 			}
 			catch {
 
-				Write-Host "GitHub Release failed." -ForegroundColor Red
+				Write-Host "GitHub Release Failed." -ForegroundColor Red
 				throw $_
 
 			}
