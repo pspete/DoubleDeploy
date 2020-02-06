@@ -113,6 +113,9 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 	}
 
 }
+
 Else {
+
 	Write-Host "Skipping Deploy Process: GitHub Repository" -ForegroundColor Yellow
+
 }
