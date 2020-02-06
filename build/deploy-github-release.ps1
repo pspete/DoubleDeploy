@@ -45,7 +45,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 			$wc.Headers['Authorization'] = "token $token"
 
 			try {
-				$response = $wc.UploadData($uploadUrl, "POST", $data)
+				$null = $wc.UploadData($uploadUrl, "POST", $data)
 				Write-Host "OK" -ForegroundColor Green
 			}
 			catch {
