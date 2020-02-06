@@ -40,22 +40,22 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 				Write-Host "Publishing: $ModulePath"
 				Write-Host "Publish $($env:APPVEYOR_PROJECT_NAME) to Powershell Gallery......" -NoNewline
 
-				#Try {
+				Try {
 
 					Publish-Module -Path $ModulePath -NuGetApiKey $($env:psgallery_key) -SkipAutomaticTags -Confirm:$false -ErrorAction Stop -Force
 
 					Write-Host "OK" -ForegroundColor Green
 
-				#}
-				#Catch {
+				}
+				Catch {
 
-				#	Write-Host "Failed - $_." -ForegroundColor Red
-				#	throw $_
+					Write-Host "Failed - $_." -ForegroundColor Red
+					throw $_
 
-				#}
-				#Finally {
-				#	exit;
-				#}
+				}
+				Finally {
+					exit;
+				}
 
 			}
 
