@@ -12,7 +12,7 @@
 RootModule = 'DoubleDeploy.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.3.82'
+ModuleVersion = '1.0.83'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
