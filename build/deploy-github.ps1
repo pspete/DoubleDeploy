@@ -73,15 +73,13 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 				prerelease = $false
 			}
 
-			Write-Host "Creating release..." -NoNewline
+			Write-Host "Creating release $releaseName..." -NoNewline
 			$json = (ConvertTo-Json $body)
 			$release = Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases" -Headers $headers -Method POST -Body $json
 			$uploadUrl = $release.upload_url.Replace("{?name,label}", "") + "?name=" + [IO.Path]::GetFileName($uploadFilePath)
 			Write-Host "OK" -ForegroundColor Green
 
-			$uploadUrl
-
-			Write-Host "Uploading asset..." -NoNewline
+			Write-Host "Uploading asset $($env:APPVEYOR_PROJECT_NAME).zip..." -NoNewline
 			$data = [System.IO.File]::ReadAllBytes($uploadFilePath)
 			$wc = New-Object Net.WebClient
 			$wc.Headers['Content-type'] = 'application/octet-stream'
