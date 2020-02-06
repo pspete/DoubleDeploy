@@ -56,7 +56,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		If ($env:APPVEYOR_BUILD_VERSION -ge "0.3.0") {
 
 			$token = $env:access_token
-			$uploadFilePath = Resolve-Path ".\$($env:APPVEYOR_PROJECT_NAME).zip"
+			$uploadFilePath = Resolve-Path "..\$($env:APPVEYOR_PROJECT_NAME).zip"
 			$releaseName = "v$($env:APPVEYOR_BUILD_VERSION)"
 			$repo = "pspete/$env:APPVEYOR_PROJECT_NAME"
 
