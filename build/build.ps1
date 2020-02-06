@@ -39,10 +39,10 @@ Else {
 		<#-- Package Version Release    --#>
 
 		$Directory = New-Item -ItemType Directory -Path "Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)" -Force -ErrorAction Stop
-		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME).zip"
 		$ReleaseSource = $(Resolve-Path .\$env:APPVEYOR_PROJECT_NAME)
 		Copy-Item -Path $ReleaseSource\* -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
-		Compress-Archive $(Split-Path -Parent $Directory) -DestinationPath .\$OutputArchive -ErrorAction Stop
+		Compress-Archive $Directory -DestinationPath .\$OutputArchive -ErrorAction Stop
 
 		<#-- Release Artifact   --#>
 		Write-Host "Release Artifact  : $OutputArchive"
