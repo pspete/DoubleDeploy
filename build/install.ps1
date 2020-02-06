@@ -1,9 +1,10 @@
 #---------------------------------#
 # Header                          #
 #---------------------------------#
-Write-Host "Installing Required Modules: PSVersion $($PSVersionTable.PSVersion)" -ForegroundColor Yellow
+Write-Host "Installing Required Modules:" -ForegroundColor Yellow
 
 $RequiredModules = @(
+	"PowerShellGet"
 	"Pester",
 	"PSScriptAnalyzer",
 	"coveralls",
