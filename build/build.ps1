@@ -90,7 +90,7 @@ Else {
 
 		<#-- Release Artifact   --#>
 		Write-Host "Release Artifact  : $OutputArchive"
-		Push-AppveyorArtifact .\$OutputArchive -FileName ..\$OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
+		Push-AppveyorArtifact ..\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
 
 		Remove-Item -Path .\Release -Recurse -Force
 
