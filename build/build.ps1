@@ -56,6 +56,8 @@ Else {
 
 				If ($env:APPVEYOR_BUILD_VERSION -ge "1.0.0") {
 
+					Write-Host "Signing Files" -ForegroundColor Cyan
+
 					Try {
 						$KeyPath = Join-Path $([System.Environment]::GetEnvironmentVariable("TEMP")) cert.pfx
 						[IO.File]::WriteAllBytes($KeyPath, [Convert]::FromBase64String($($env:sig_key)))
@@ -63,21 +65,21 @@ Else {
 						$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
 						$Cred = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList "UserName", $SecurePW
 
-						Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
+						$Cert = Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
 
-						$Cert = Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert
-						Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
-						New-FileCatalog -CatalogVersion 1 -CatalogFilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat" -Path $($Directory.Fullname)
-						Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com' -FilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat"
+						$null = Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
+						$null = New-FileCatalog -CatalogVersion 1 -CatalogFilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat" -Path $($Directory.Fullname)
+						$null = Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com' -FilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat"
 					}
 					Catch {
 						Throw $_
 					}
 					Finally {
 
-						#Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert | Remove-Item -Force
-						#Remove-Item -Path $KeyPath -Force
-						#Remove-Variable -Name SecurePW -Force
+						Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert | Remove-Item -Force
+						Remove-Item -Path $KeyPath -Force
+						Remove-Variable -Name SecurePW -Force
+						Remove-Variable -Name Cred -Force
 
 					}
 
@@ -94,13 +96,17 @@ Else {
 		Write-Host "Release Artifact  : $OutputArchive"
 		Push-AppveyorArtifact ..\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
 
-		Remove-Item -Path .\Release -Recurse -Force
-
 	}
 
 	Catch {
 
 		throw $_
+
+	}
+
+	Finally {
+
+		Remove-Item -Path .\Release -Recurse -Force
 
 	}
 
