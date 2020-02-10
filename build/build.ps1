@@ -60,9 +60,10 @@ Else {
 						$KeyPath = Join-Path $([System.Environment]::GetEnvironmentVariable("TEMP")) cert.pfx
 						[IO.File]::WriteAllBytes($KeyPath, [Convert]::FromBase64String($($env:sig_key)))
 
-						$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
+						#$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
+						$Cred = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList "UserName", $SecurePW
 
-						Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $SecurePW
+						Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
 
 						$Cert = Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert
 						Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
@@ -74,9 +75,9 @@ Else {
 					}
 					Finally {
 
-						Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert | Remove-Item -Force
-						Remove-Item -Path $KeyPath -Force
-						Remove-Variable -Name SecurePW -Force
+						#Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert | Remove-Item -Force
+						#Remove-Item -Path $KeyPath -Force
+						#Remove-Variable -Name SecurePW -Force
 
 					}
 
