@@ -37,18 +37,62 @@ Else {
 		Set-Content $ManifestPath -ErrorAction Stop
 
 		<#-- Package Version Release    --#>
-		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME).zip"
+		$Directory = New-Item -ItemType Directory -Path "Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)" -Force -ErrorAction Stop
+		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+
+		$OutputArchive = "$($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip"
 		$ReleaseSource = $(Resolve-Path .\$env:APPVEYOR_PROJECT_NAME)
 
+		<#-- Create Release Folder  --#>
 		$Directory = New-Item -ItemType Directory -Path "..\Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)" -Force -ErrorAction Stop
 
+		<#-- Copy Module Files    --#>
 		Copy-Item -Path $ReleaseSource\* -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
 
+
+		If (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
+
+			If ($ENV:APPVEYOR_REPO_BRANCH -eq 'master') {
+
+				If ($env:APPVEYOR_BUILD_VERSION -ge "1.0.0") {
+
+					Try {
+						$KeyPath = Join-Path $([System.Environment]::GetEnvironmentVariable("TEMP")) cert.pfx
+						[IO.File]::WriteAllBytes($KeyPath, [Convert]::FromBase64String($($env:sig_key)))
+
+						$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
+						Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $SecurePW
+
+						$Cert = Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert
+						Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
+						New-FileCatalog -CatalogVersion 1 -CatalogFilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat" -Path $($Directory.Fullname)
+						Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com' -FilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat"
+					}
+					Catch {
+						Throw $_
+					}
+					Finally {
+
+						Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert | Remove-Item -Force
+						Remove-Item -Path $KeyPath -Force
+						Remove-Variable -Name SecurePW -Force
+
+					}
+
+				}
+
+			}
+
+		}
+
+		<#-- Create Package    --#>
 		Compress-Archive $Directory -DestinationPath ..\$OutputArchive -ErrorAction Stop
 
 		<#-- Release Artifact   --#>
 		Write-Host "Release Artifact  : $OutputArchive"
-		Push-AppveyorArtifact ..\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
+		Push-AppveyorArtifact .\$OutputArchive -FileName $OutputArchive -DeploymentName "$env:APPVEYOR_PROJECT_NAME-latest"
+
+		Remove-Item -Path .\Release -Recurse -Force
 
 	}
 
