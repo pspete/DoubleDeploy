@@ -1,5 +1,5 @@
 # version format
-version: 1.0.{build}
+version: 0.2.{build}
 
 environment:
   #GIT_TRACE: 1
@@ -13,6 +13,10 @@ environment:
     secure: P8TyHefSoYBAZk/UMFHNWcfmcjQp0o3X3fP3DMFhTzxXa6yXlA+w8CT69jYfh7n/
   github_email:
     secure: x5ljenzXfYXkzpEu9eX7AQvb3AkFbiXG2NndMzw9Zc4=
+  sig_key:
+    secure: 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
+  PfxSecure:
+    secure: Kkp5iutKCw8ACijkd5Et8xUjF4e39dJRuoaTWIHem5tVaF5QeqUnrPSjkPsNDwro
 
 skip_tags: true
 
@@ -39,6 +43,8 @@ only_commits:
 
 image: Visual Studio 2017
 
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
   - ps: . .\build\install.ps1
   - pwsh.exe -File .\build\install.ps1
@@ -50,9 +56,24 @@ test_script:
   - ps: . .\build\test.ps1
   - pwsh.exe -File .\build\test.ps1
 
-deploy_script:
-  - ps: . .\build\deploy-github.ps1
-  - pwsh.exe -File .\build\deploy-psgallery.ps1
+deploy:
+  release: $(APPVEYOR_PROJECT_NAME)-v$(APPVEYOR_BUILD_VERSION)
+  description: '$(APPVEYOR_PROJECT_NAME) $(APPVEYOR_BUILD_VERSION)'
+  provider: GitHub
+  auth_token:
+    secure: bDZ9LJ84SWlGw/D3R/q3ADwDslfrLNZLMdH3ZRjdi5xwkGanmjf7DvgN+crc4BU/
+  artifact: $(APPVEYOR_PROJECT_NAME)-latest
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: false
 
+<<<<<<< Updated upstream
+after_deploy:
+  - ps: . .\build\deploy-github.ps1
+  - ps: . .\build\deploy-psgallery.ps1
+=======
 on_failure:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+>>>>>>> Stashed changes
