@@ -60,7 +60,7 @@ Else {
 						$KeyPath = Join-Path $([System.Environment]::GetEnvironmentVariable("TEMP")) cert.pfx
 						[IO.File]::WriteAllBytes($KeyPath, [Convert]::FromBase64String($($env:sig_key)))
 
-						#$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
+						$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
 						$Cred = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList "UserName", $SecurePW
 
 						Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
