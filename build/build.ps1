@@ -61,7 +61,9 @@ Else {
 						[IO.File]::WriteAllBytes($KeyPath, [Convert]::FromBase64String($($env:sig_key)))
 
 						$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
-						Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $SecurePW
+						$Cred = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList "UserName", $SecurePW
+
+						Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
 
 						$Cert = Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert
 						Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
