@@ -85,7 +85,7 @@ Else {
 
 		}
 
-		<#-- Create Package    --#>
+		<#-- Create Package    ---#>
 		Compress-Archive $Directory -DestinationPath ..\$OutputArchive -ErrorAction Stop
 
 		<#-- Release Artifact   --#>
