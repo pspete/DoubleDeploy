@@ -36,7 +36,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		 		#----------------------------------#>
 
 				$ModulePath = Resolve-Path "..\Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)"
-				Write-Host $ModulePath
+
 				Write-Host "Publish $($env:APPVEYOR_PROJECT_NAME) $($env:APPVEYOR_BUILD_VERSION) to Powershell Gallery......" -NoNewline
 
 				Try {
