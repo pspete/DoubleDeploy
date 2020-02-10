@@ -68,7 +68,7 @@ Else {
 						$Cert = Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
 
 						$null = Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
-						$null = New-FileCatalog -CatalogVersion 1 -CatalogFilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat" -Path $($Directory.Fullname)
+						$null = New-FileCatalog -CatalogVersion 2 -CatalogFilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat" -Path $($Directory.Fullname)
 						$null = Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com' -FilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat"
 					}
 					Catch {
