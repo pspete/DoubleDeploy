@@ -51,14 +51,14 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 
 	If ($ENV:APPVEYOR_REPO_BRANCH -eq 'master') {
 
-		<# Master Branch     #>
+		<# Master Branch #>
 
-		If ($env:APPVEYOR_BUILD_VERSION -ge "0.3.0") {
+		If ($env:APPVEYOR_BUILD_VERSION -ge "1.0.0") {
 
 			<# Create New Release     #>
 
 			$token = $env:access_token
-			$uploadFilePath = Resolve-Path "..\$($env:APPVEYOR_PROJECT_NAME).zip"
+			$uploadFilePath = Resolve-Path "..\$($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip"
 			$releaseName = "v$($env:APPVEYOR_BUILD_VERSION)"
 			$repo = "pspete/$env:APPVEYOR_PROJECT_NAME"
 
@@ -83,7 +83,7 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 				$uploadUrl = $release.upload_url.Replace("{?name,label}", "") + "?name=" + [IO.Path]::GetFileName($uploadFilePath)
 				Write-Host "OK" -ForegroundColor Green
 
-				Write-Host "Uploading asset $($env:APPVEYOR_PROJECT_NAME).zip..." -NoNewline
+				Write-Host "Uploading asset $($env:APPVEYOR_PROJECT_NAME)-v$($env:APPVEYOR_BUILD_VERSION).zip..." -NoNewline
 
 				$data = [System.IO.File]::ReadAllBytes($uploadFilePath)
 				$wc = New-Object Net.WebClient
