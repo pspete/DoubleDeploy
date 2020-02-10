@@ -12,8 +12,6 @@ Function Test-PrivateFile {
 	.EXAMPLE
 	An example
 
-	.NOTES
-	General notes
 	#>
 
 	[CmdletBinding()]

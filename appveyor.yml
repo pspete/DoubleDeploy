@@ -1,5 +1,5 @@
 # version format
-version: 0.2.{build}
+version: 1.0.{build}
 
 environment:
   #GIT_TRACE: 1
@@ -39,8 +39,6 @@ only_commits:
 
 image: Visual Studio 2017
 
-init:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
   - ps: . .\build\install.ps1
   - pwsh.exe -File .\build\install.ps1
@@ -52,19 +50,9 @@ test_script:
   - ps: . .\build\test.ps1
   - pwsh.exe -File .\build\test.ps1
 
-deploy:
-  release: $(APPVEYOR_PROJECT_NAME)-v$(APPVEYOR_BUILD_VERSION)
-  description: '$(APPVEYOR_PROJECT_NAME) $(APPVEYOR_BUILD_VERSION)'
-  provider: GitHub
-  auth_token:
-    secure: bDZ9LJ84SWlGw/D3R/q3ADwDslfrLNZLMdH3ZRjdi5xwkGanmjf7DvgN+crc4BU/
-  artifact: $(APPVEYOR_PROJECT_NAME)-latest
-  draft: false
-  prerelease: false
-  on:
-    branch: master
-    APPVEYOR_REPO_TAG: false
-
-after_deploy:
+deploy_script:
   - ps: . .\build\deploy-github.ps1
-  - ps: . .\build\deploy-psgallery.ps1
+  - pwsh.exe -File .\build\deploy-psgallery.ps1
+
+on_failure:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
