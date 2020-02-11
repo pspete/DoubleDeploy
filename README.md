@@ -16,6 +16,11 @@
 |                          |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                         |
 
 
+| Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |
+|--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|
+|[![appveyor][]][av-site]  |[![tests][]][tests-site] | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |
+|                          |                         |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |
+
 [appveyor]:https://ci.appveyor.com/api/projects/status/y6ad0firmgxok216?svg=true
 [av-site]:https://ci.appveyor.com/project/pspete/doubledeploy/branch/master
 [coveralls]:https://coveralls.io/repos/github/pspete/DoubleDeploy/badge.svg?branch=master
