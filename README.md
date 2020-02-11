@@ -34,4 +34,5 @@
 [codefactor]:https://www.codefactor.io/repository/github/pspete/doubledeploy/badge
 [codecov]:https://codecov.io/gh/pspete/DoubleDeploy/branch/master/graph/badge.svg
 [codecov-link]:https://codecov.io/gh/pspete/DoubleDeploy
+[license]:https://img.shields.io/github/license/pspete/doubledeploy.svg
 [license-link]:https://github.com/pspete/DoubleDeploy/blob/master/LICENSE.md
