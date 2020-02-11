@@ -37,7 +37,7 @@ Describe $FunctionName {
 
 			It 'passes some other test' {
 
-				Test-PublicFile -Scope 6 | Should -Be -ExpectedValue $true
+				Test-PublicFile -Scope 6 | Should -Be -ExpectedValue $false
 
 			}
 
