@@ -104,10 +104,4 @@ Else {
 
 	}
 
-	Finally {
-
-		Get-ChildItem -Path .\Release -Recurse | Remove-Item -Force
-
-	}
-
 }
