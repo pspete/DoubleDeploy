@@ -50,38 +50,34 @@ Else {
 		Copy-Item -Path $ReleaseSource\* -Recurse -Destination $($Directory.Fullname) -Force -ErrorAction Stop
 
 
-		If (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
+		If ((-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) -and (($ENV:APPVEYOR_REPO_BRANCH -eq 'master') -and ($ENV:APPVEYOR_BUILD_VERSION -ge "1.0.0"))) {
 
-			If ($ENV:APPVEYOR_REPO_BRANCH -eq 'master') {
+			If (($ENV:sig_key) -and ($ENV:PfxSecure)) {
 
-				If ($env:APPVEYOR_BUILD_VERSION -ge "1.0.0") {
+				Write-Host "Signing Files" -ForegroundColor Cyan
 
-					Write-Host "Signing Files" -ForegroundColor Cyan
+				Try {
+					$KeyPath = Join-Path $([System.Environment]::GetEnvironmentVariable("TEMP")) cert.pfx
+					[IO.File]::WriteAllBytes($KeyPath, [Convert]::FromBase64String($($env:sig_key)))
 
-					Try {
-						$KeyPath = Join-Path $([System.Environment]::GetEnvironmentVariable("TEMP")) cert.pfx
-						[IO.File]::WriteAllBytes($KeyPath, [Convert]::FromBase64String($($env:sig_key)))
+					$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
+					$Cred = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList "UserName", $SecurePW
 
-						$SecurePW = ConvertTo-SecureString -String $($env:PfxSecure) -Force -AsPlainText
-						$Cred = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList "UserName", $SecurePW
+					$Cert = Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
 
-						$Cert = Get-ChildItem -Path $KeyPath | Import-PfxCertificate -CertStoreLocation "Cert:\CurrentUser\My" -Password $Cred.Password
+					$null = Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
+					$null = New-FileCatalog -CatalogVersion 2 -CatalogFilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat" -Path $($Directory.Fullname)
+					$null = Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com' -FilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat"
+				}
+				Catch {
+					Throw $_
+				}
+				Finally {
 
-						$null = Get-ChildItem -Path "$($Directory.Fullname)\*.ps*" -Recurse | Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com'
-						$null = New-FileCatalog -CatalogVersion 2 -CatalogFilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat" -Path $($Directory.Fullname)
-						$null = Set-AuthenticodeSignature -Certificate $Cert -TimestampServer 'http://timestamp.digicert.com' -FilePath "$($Directory.Fullname)\$($env:APPVEYOR_PROJECT_NAME).cat"
-					}
-					Catch {
-						Throw $_
-					}
-					Finally {
-
-						Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert | Remove-Item -Force
-						Remove-Item -Path $KeyPath -Force
-						Remove-Variable -Name SecurePW -Force
-						Remove-Variable -Name Cred -Force
-
-					}
+					Get-ChildItem -Path "Cert:\CurrentUser\My" -Recurse -CodeSigningCert | Remove-Item -Force
+					Remove-Item -Path $KeyPath -Force
+					Remove-Variable -Name SecurePW -Force
+					Remove-Variable -Name Cred -Force
 
 				}
 
