@@ -33,8 +33,7 @@ Else {
 		Write-Host "Updating Manifest Version to $env:APPVEYOR_BUILD_VERSION" -ForegroundColor Cyan
 
 		#Replace version in manifest with build version from appveyor
-		((Get-Content $ManifestPath).replace("= '$($currentVersion)'", "= '$($env:APPVEYOR_BUILD_VERSION)'")) |
-		Set-Content $ManifestPath -ErrorAction Stop
+		((Get-Content $ManifestPath).replace("= '$($currentVersion)'", "= '$($env:APPVEYOR_BUILD_VERSION)'")) | Set-Content $ManifestPath -ErrorAction Stop
 
 		<#-- Package Version Release    --#>
 		$Directory = New-Item -ItemType Directory -Path "Release\$($env:APPVEYOR_PROJECT_NAME)\$($env:APPVEYOR_BUILD_VERSION)" -Force -ErrorAction Stop
