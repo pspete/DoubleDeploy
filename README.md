@@ -16,10 +16,10 @@
 |                          |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                         |
 
 
-| Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |
-|--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|
-|[![appveyor][]][av-site]  |[![tests][]][tests-site] | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |
-|                          |                         |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |
+| Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |  License                   |
+|--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|----------------------------|
+|[![appveyor][]][av-site]  |[![tests][]][tests-site] | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |[![license][]][license-link]|
+|                          |                         |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                            |
 
 [appveyor]:https://ci.appveyor.com/api/projects/status/y6ad0firmgxok216?svg=true
 [av-site]:https://ci.appveyor.com/project/pspete/doubledeploy/branch/master
@@ -34,3 +34,4 @@
 [codefactor]:https://www.codefactor.io/repository/github/pspete/doubledeploy/badge
 [codecov]:https://codecov.io/gh/pspete/DoubleDeploy/branch/master/graph/badge.svg
 [codecov-link]:https://codecov.io/gh/pspete/DoubleDeploy
+[license-link]:https://github.com/pspete/DoubleDeploy/blob/master/LICENSE.md
