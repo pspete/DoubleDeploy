@@ -106,7 +106,7 @@ Else {
 
 	Finally {
 
-		Remove-Item -Path .\Release -Recurse -Force
+		Get-ChildItem -Path .\Release -Recurse | Remove-Item -Force
 
 	}
 
