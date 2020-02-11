@@ -3,10 +3,12 @@
 |--------------------------|---------------------------|--------------------------|---------------------------|----------------------------|-------------------------|-----------------------------|
 |[![appveyor][]][av-site]  | [![coveralls][]][cv-site] |[![codefactor][]][cf-site]| [![psgallery][]][ps-site] |[![downloads][]][ps-site]   |[![tests][]][tests-site] |[![codecov][]][codecov-link] |
 
+
 | Master Branch            | CodeFactor                | Coverage                    |  PowerShell Gallery       | Downloads                  | Latest Build            |
 |--------------------------|---------------------------|-----------------------------|---------------------------|----------------------------|-------------------------|
 |[![appveyor][]][av-site]  | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |[![downloads][]][ps-site]   |[![tests][]][tests-site] |
-|                          |                           | [![coveralls][]][cv-site] ||||
+|                          |                           | [![coveralls][]][cv-site]   |                           |                            |                         |
+
 [appveyor]:https://ci.appveyor.com/api/projects/status/y6ad0firmgxok216?svg=true
 [av-site]:https://ci.appveyor.com/project/pspete/doubledeploy/branch/master
 [coveralls]:https://coveralls.io/repos/github/pspete/DoubleDeploy/badge.svg?branch=master
