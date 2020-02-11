@@ -17,16 +17,12 @@ if (-not ($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
 		Write-Host "Push Updated $($env:APPVEYOR_PROJECT_NAME).psd1 to GitHub..." -ForegroundColor Yellow
 
 		git config --global core.safecrlf false
-
 		git config --global credential.helper store
-
 		Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-
 		git config --global user.email "$($env:github_email)"
-
 		git config --global user.name "Pete Maan"
 
-		git checkout $($ENV:APPVEYOR_REPO_BRANCH) -q
+		git checkout -q $($ENV:APPVEYOR_REPO_BRANCH)
 
 		git add $(Join-Path -Path (Join-Path -Path "$env:APPVEYOR_BUILD_FOLDER" -ChildPath "$env:APPVEYOR_PROJECT_NAME") -ChildPath "$env:APPVEYOR_PROJECT_NAME.psd1")
 
