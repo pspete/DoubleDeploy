@@ -1,4 +1,4 @@
-
+<!---
 | Master Branch            | Coveralls                 | CodeFactor               |  PowerShell Gallery       | Downloads                  | Latest Build            | CodeCov                     |
 |--------------------------|---------------------------|--------------------------|---------------------------|----------------------------|-------------------------|-----------------------------|
 |[![appveyor][]][av-site]  | [![coveralls][]][cv-site] |[![codefactor][]][cf-site]| [![psgallery][]][ps-site] |[![downloads][]][ps-site]   |[![tests][]][tests-site] |[![codecov][]][codecov-link] |
@@ -14,7 +14,7 @@
 |--------------------------|---------------------------|-----------------------------|---------------------------|-------------------------|
 |[![appveyor][]][av-site]  | [![codefactor][]][cf-site]| [![codecov][]][codecov-link]| [![psgallery][]][ps-site] |[![tests][]][tests-site] |
 |                          |                           | [![coveralls][]][cv-site]   | [![downloads][]][ps-site] |                         |
-
+-->
 
 | Master Branch            | Latest Build            | CodeFactor                | Coverage                    |  PowerShell Gallery       |  License                   |
 |--------------------------|-------------------------|---------------------------|-----------------------------|---------------------------|----------------------------|
