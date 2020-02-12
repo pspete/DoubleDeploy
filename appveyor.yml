@@ -52,9 +52,9 @@ test_script:
   - ps: . .\build\test.ps1
   - pwsh.exe -File .\build\test.ps1
 
-deploy_script:
-  - ps: . .\build\deploy-github.ps1
-  - pwsh.exe -File .\build\deploy-psgallery.ps1
+#deploy_script:
+  #- ps: . .\build\deploy-github.ps1
+  #- pwsh.exe -File .\build\deploy-psgallery.ps1
 
 on_failure:
   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
