@@ -27,7 +27,7 @@ foreach ($Module in $RequiredModules) {
 	Try {
 		Write-Host "`tInstalling: $Module..." -NoNewline
 		Install-Module -Name $Module -Repository PSGallery -Confirm:$false -Force -SkipPublisherCheck -ErrorAction Stop | Out-Null
-		Write-Host "OK" -ForegroundColor Green
+		Write-Host " OK" -ForegroundColor Green
 	}Catch {
 		Write-Host "Error" -ForegroundColor Red
 		throw $_
