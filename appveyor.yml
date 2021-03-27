@@ -43,20 +43,22 @@ image: Visual Studio 2017
 
 install:
   - cinst pwsh
+  - ps: (new-object net.webclient).DownloadFile('https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi', 'mypackage.msi')
+  - ps: msiexec.exe /package mypackage.msi /quiet
   - ps: refreshenv
   - ps: . .\build\install.ps1
-  - ps: pwsh.exe -File .\build\install.ps1
+  - pwsh.exe -File .\build\install.ps1
 
 build_script:
   - ps: . .\build\build.ps1
 
 test_script:
   - ps: . .\build\test.ps1
-  - ps: pwsh.exe -File .\build\test.ps1
+  - pwsh.exe -File .\build\test.ps1
 
 #deploy_script:
   #- ps: . .\build\deploy-github.ps1
-  #- ps: pwsh.exe -File .\build\deploy-psgallery.ps1
+  #- pwsh.exe -File .\build\deploy-psgallery.ps1
 
 #on_failure:
   #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
