@@ -39,9 +39,10 @@ only_commits:
     - DoubleDeploy\
     - tests\
 
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 install:
+  - cinst powershell
   - ps: . .\build\install.ps1
   - pwsh.exe -File .\build\install.ps1
 
