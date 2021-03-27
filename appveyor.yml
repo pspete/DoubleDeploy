@@ -42,7 +42,7 @@ only_commits:
 image: Visual Studio 2019
 
 install:
-  - pwsh.exe Set-Service wuauserv -StartupType Manual -Status Running
+  - pwsh.exe -Command {Set-Service wuauserv -StartupType Manual -Status Running}
   - cinst powershell
   - ps: refreshenv
   - ps: . .\build\install.ps1
