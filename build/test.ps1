@@ -33,7 +33,7 @@ Remove-Item -Path $(Resolve-Path .\TestsResults.xml) -Force
 
 if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 
-	#Write-Host 'Formating Code Coverage...'
+	#Write-Host 'Formating Code Coverage'
 	#$coverage = Format-Coverage -PesterResults $res -CoverallsApiToken $($env:coveralls_key) -BranchName $($env:APPVEYOR_REPO_BRANCH)
 
 	#$null = Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path coverage.json
