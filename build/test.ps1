@@ -33,19 +33,19 @@ Remove-Item -Path $(Resolve-Path .\TestsResults.xml) -Force
 
 if ($env:APPVEYOR_REPO_COMMIT_AUTHOR -eq "Pete Maan") {
 
-	Write-Host 'Formating Code Coverage'
-	$coverage = Format-Coverage -PesterResults $res -CoverallsApiToken $($env:coveralls_key) -BranchName $($env:APPVEYOR_REPO_BRANCH)
+	#Write-Host 'Formating Code Coverage'
+	#$coverage = Format-Coverage -PesterResults $res -CoverallsApiToken $($env:coveralls_key) -BranchName $($env:APPVEYOR_REPO_BRANCH)
 
-	$null = Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path coverage.json
+	#$null = Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $pwd -Path coverage.json
 
 	Write-Host 'Publishing Code Coverage'
-	$null = Publish-Coverage -Coverage $coverage
+	#$null = Publish-Coverage -Coverage $coverage
 
 	$null = Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
 
-	$null = bash codecov.sh -f coverage.json
+	$null = bash codecov.sh -f coverage.xml
 
-	Remove-Item -Path $(Resolve-Path .\coverage.json) -Force
+	Remove-Item -Path $(Resolve-Path .\coverage.xml) -Force
 	Remove-Item -Path $(Resolve-Path .\codecov.sh) -Force
 
 }
