@@ -23,20 +23,20 @@ Function Test-PrivateFile {
 		[Int]
 		$TestParam
 	)
+	Process{
+		If ($IsCoreCLR) {
+			$SomeVar = "SomeValue"
+		}
+		Else {
+			$SomeVar = "SomeOtherValue"
+		}
+		If ($TestParam -lt 5) {
+			$SomeVar = $True
+		}
+		Else {
+			$SomeVar = $false
+		}
 
-	If ($IsCoreCLR) {
-		$SomeVar = "SomeValue"
+		$SomeVar
 	}
-	Else {
-		$SomeVar = "SomeOtherValue"
-	}
-	If ($TestParam -lt 5) {
-		$SomeVar = $True
-	}
-	Else {
-		$SomeVar = $false
-	}
-
-	$SomeVar
-
 }

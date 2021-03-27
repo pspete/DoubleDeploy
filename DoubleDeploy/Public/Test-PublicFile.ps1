@@ -23,7 +23,7 @@ Function Test-PublicFile {
 		[Int]
 		$Scope
 	)
-
-	Test-PrivateFile -TestParam $Scope
-
+	Process{
+		Test-PrivateFile -TestParam $Scope
+	}
 }
