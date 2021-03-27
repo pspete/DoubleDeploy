@@ -43,7 +43,7 @@ image: Visual Studio 2017
 
 install:
   - cinst pwsh
-  -ps: refreshenv
+  - ps: refreshenv
   - ps: . .\build\install.ps1
   - pwsh.exe -File .\build\install.ps1
 
