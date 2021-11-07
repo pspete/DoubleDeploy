@@ -52,3 +52,4 @@ test_script:
 
 #deploy_script:
   #- pwsh.exe -File .\build\deploy-psgallery.ps1
+  - pwsh.exe -File .\build\deploy-github.ps1
